@@ -1,0 +1,17 @@
+# macOS
+.DS_Store
+
+# Node
+node_modules/
+
+# Logs
+*.log
+
+# Android build files
+android/.gradle/
+android/app/build/
+android/build/
+
+# IDE
+.vscode/
+.idea/
