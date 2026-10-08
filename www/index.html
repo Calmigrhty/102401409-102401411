@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>校园失物招领</title>
+
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/home.css">
+</head>
+
+<body>
+  <div class="app">
+    <header class="home-header">
+      <h1>首页</h1>
+      <p>在这里，遗失的物品也能找到回家的路。</p>
+    </header>
+
+    <main>
+      <div class="filter-tabs">
+        <button class="filter-btn active" data-type="all">全部</button>
+        <button class="filter-btn" data-type="lost">寻物大厅</button>
+        <button class="filter-btn" data-type="found">招领大厅</button>
+      </div>
+
+      <div id="post-list" class="post-list"></div>
+    </main>
+
+    <nav class="bottom-nav">
+      <a href="index.html" class="active">首页</a>
+      <a href="discover.html">发现</a>
+      <a href="publish.html">发布</a>
+      <a href="profile.html">我的</a>
+    </nav>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/home.js"></script>
+</body>
+</html>
