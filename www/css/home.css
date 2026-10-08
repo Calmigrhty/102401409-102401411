@@ -1,85 +1,97 @@
 .home-header {
-  padding: 28px 20px 18px;
+  padding: 28px 20px 16px;
 }
 
 .home-header h1 {
   margin: 0 0 8px;
   font-size: 28px;
+  letter-spacing: 2px;
 }
 
 .home-header p {
   margin: 0;
-  color: #777777;
-  font-size: 14px;
+  color: #999999;
+  font-size: 13px;
 }
 
+/* 顶部选项卡 */
 .filter-tabs {
   display: flex;
-  gap: 10px;
+  gap: 12px;
   padding: 0 20px 20px;
 }
 
 .filter-btn {
   border: none;
-  background: #f0f1f3;
-  padding: 8px 14px;
-  border-radius: 18px;
-  color: #666666;
+  background: #ffffff; /* 默认白色背景[cite: 8] */
+  padding: 8px 18px;
+  border-radius: 20px;
+  color: #666666; /* 默认浅色文字[cite: 8] */
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.03); /* 轻微浮雕感 */
   cursor: pointer;
 }
 
 .filter-btn.active {
-  background: #222222;
+  background: #4ade80; /* 设计图的亮绿色[cite: 8] */
   color: #ffffff;
 }
 
+/* 物品卡片列表 */
 .post-list {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 14px;
+  gap: 16px;
   padding: 0 20px 20px;
 }
 
 .post-card {
-  padding: 14px;
-  border: 1px solid #eeeeee;
-  border-radius: 14px;
   background: #ffffff;
+  border-radius: 16px;
+  overflow: hidden; /* 关键：强制裁切上方图片的直角，使其跟随卡片变圆[cite: 8] */
+  box-shadow: 0 4px 16px rgba(0,0,0,0.04);
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
 }
 
-.post-card h3 {
-  margin: 8px 0;
-  font-size: 15px;
+/* 卡片内的图片占满上半部 */
+.post-card-img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover; /* 保证图片等比缩放填满，不拉伸[cite: 8] */
+  background: #f0f0f0;
 }
 
-.post-card p {
-  margin: 4px 0;
-  font-size: 12px;
-  color: #777777;
+/* 卡片下半部的文字区域 */
+.post-card-info {
+  padding: 12px;
 }
 
-.post-type {
-  display: inline-block;
-  padding: 4px 8px;
-  border-radius: 10px;
-  background: #f0f1f3;
+.post-card-info h3 {
+  margin: 0 0 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #222222;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* 标题过长打点 */
+}
+
+.post-card-info p {
+  margin: 0;
   font-size: 11px;
+  color: #999999;
 }
 
-.post-icon {
-  height: 80px;
+/* 当没有图片时，用来装 Emoji 的占位框 */
+.post-icon-fallback {
+  width: 100%;
+  height: 140px; /* 和真实的图片保持一样的高度 */
+  background: #f0f1f3; /* 浅灰底色 */
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f6f6f6;
-  border-radius: 10px;
-  font-size: 32px;
-}
-
-.empty-tip {
-  grid-column: 1 / -1;
-  text-align: center;
-  color: #999999;
-  padding: 40px 0;
+  font-size: 48px; /* 把 Emoji 放大 */
 }
