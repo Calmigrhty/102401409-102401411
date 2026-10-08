@@ -1,0 +1,110 @@
+/* ================= 发现页 (Discover) 专属样式 ================= */
+
+/* 搜索框容器 */
+.search-container {
+  padding: 0 20px 16px;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 10px 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+}
+
+.search-box svg {
+  width: 18px;
+  height: 18px;
+  fill: #999999;
+  margin-right: 8px;
+}
+
+.search-box input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 14px;
+  color: #222222;
+}
+
+.search-box input::placeholder {
+  color: #cccccc;
+}
+
+/* 发现页卡片特有的迷你标签区 */
+.post-card-tags {
+  display: flex;
+  gap: 6px;
+  padding: 12px 12px 6px 12px;
+}
+
+.tag-type, .tag-category {
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.tag-type {
+  color: #34c759; /* 招领为绿色 */
+  background: #eafff0;
+}
+
+.tag-type.lost {
+  color: #ff3b30; /* 寻物为红色 */
+  background: #ffebe9;
+}
+
+.tag-category {
+  color: #777777;
+  background: #f0f1f3;
+}
+
+/* 调整发现页卡片文字边距，因为上面挤进来了标签 */
+.discover-card-info {
+  padding: 6px 12px 12px;
+}
+.discover-card-info h3 {
+  margin: 0 0 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #222222;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.discover-card-info p {
+  margin: 0 0 4px; 
+  font-size: 11px;
+  color: #999999;
+}
+
+/* ================= 解决发现页标签换行与横向滑动 ================= */
+
+/* 针对发现页特有的标签容器进行覆写 */
+#discover-filters {
+  display: flex;
+  flex-wrap: nowrap; /* 核心：强制不换行 */
+  overflow-x: auto; /* 核心：超出部分允许横向滚动 */
+  overflow-y: hidden;
+  padding: 0 20px 20px;
+  gap: 12px;
+  
+  /* 隐藏滚动条但保留滚动功能 (针对不同浏览器的兼容写法) */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+}
+
+/* 隐藏 Chrome, Safari, Edge 的滚动条 */
+#discover-filters::-webkit-scrollbar {
+  display: none;
+}
+
+/* 确保按钮里的文字绝对不换行 */
+#discover-filters .filter-btn {
+  white-space: nowrap; /* 核心：文字强制一行显示 */
+  flex-shrink: 0; /* 核心：防止 flex 布局自动压缩按钮宽度 */
+}
