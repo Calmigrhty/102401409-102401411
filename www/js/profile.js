@@ -17,10 +17,13 @@ function renderMyPosts() {
     ];
   }
 
-  // 动态更新顶部的数字统计 (假设找回数量写死 12 个作为演示)
+  // 动态更新顶部的数字统计
   const publishedCount = myPosts.length;
   document.getElementById("stat-published").textContent = publishedCount;
-  document.getElementById("stat-resolved").textContent = "12"; 
+  
+  // 【修改这里】动态计算已解决的数量，而不是写死 12
+  const resolvedCount = myPosts.filter(post => post.status === "resolved").length + 12;
+  document.getElementById("stat-resolved").textContent = resolvedCount;
 
   postList.innerHTML = "";
 
