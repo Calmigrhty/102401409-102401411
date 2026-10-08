@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>发布信息 - 校园失物招领</title>
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/home.css"> 
+  <link rel="stylesheet" href="css/publish.css"> <!-- 专属的发布页样式 -->
+</head>
+
+<body>
+  <div class="app">
+    <header class="home-header">
+      <h1>发布信息</h1>
+      <p>填写线索，让失物早日找到主人</p>
+    </header>
+
+    <main class="publish-main">
+      <!-- 类型选择 -->
+      <div class="form-group">
+        <label class="form-label">类型</label>
+        <div class="type-options">
+          <button class="type-btn active" data-type="lost">丢失</button>
+          <button class="type-btn" data-type="found">招领</button>
+        </div>
+      </div>
+
+      <!-- 类别选择 -->
+      <div class="form-group">
+        <label class="form-label">类别</label>
+        <div class="category-options">
+          <button class="cat-btn active" data-category="数码电子">数码电子</button>
+          <button class="cat-btn" data-category="卡片证件">卡片证件</button>
+          <button class="cat-btn" data-category="交通工具">交通工具</button>
+          <button class="cat-btn" data-category="其他">其他</button>
+        </div>
+      </div>
+
+      <!-- 输入表单 -->
+      <div class="form-group">
+        <label class="form-label">物品名称</label>
+        <input type="text" class="form-input" placeholder="填写物品名称">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">丢失/拾取地点</label>
+        <input type="text" class="form-input" placeholder="填写地点">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">详细描述</label>
+        <textarea class="form-textarea" placeholder="填写物品特征及时间" rows="4"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">上传照片（选填）</label>
+        <div class="upload-box" id="upload-box">
+          <span id="upload-text">+ 添加照片</span>
+          <!-- 隐藏的真实上传控件 -->
+          <input type="file" id="file-input" accept="image/*" style="display: none;">
+          <!-- 默认隐藏的图片预览 -->
+          <img id="image-preview" src="" style="display: none;">
+        </div>
+      </div>
+
+      <!-- 提交按钮 -->
+      <button id="submit-btn" class="submit-btn">确认发布</button>
+    </main>
+
+    <!-- 底部导航 -->
+    <nav class="bottom-nav">
+      <a href="index.html">
+        <svg viewBox="1 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg><span>首页</span>
+      </a>
+      <a href="discover.html">
+        <svg viewBox="1 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm2.19 12.19L6 18l3.81-8.19L18 6l-3.81 8.19z"/></svg><span>发现</span>
+      </a>
+      <a href="publish.html" class="active">
+        <svg viewBox="1 0 24 24"><path d="M20 14h-6v6h-4v-6H4v-4h6V4h4v6h6v4z"/></svg><span>发布</span>
+      </a>
+      <a href="profile.html">
+        <svg viewBox="1 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg><span>我的</span>
+      </a>
+    </nav>
+
+    <!-- 弹窗 1：防重匹配 (默认隐藏) -->
+    <div id="duplicate-modal" class="modal-overlay hidden">
+      <div class="modal-content bottom-sheet">
+        <div class="sheet-indicator"></div>
+        <h2>发现附近的相似招领</h2>
+        <p class="modal-desc">有人最近发布了与您描述高度相符的物品，请确认这是否是您遗失的？</p>
+        
+        <div class="duplicate-card">
+          <img src="img/airpods.jpg" onerror="this.src='https://via.placeholder.com/80'" alt="AirPods">
+          <div class="duplicate-info">
+            <span class="tag-type">招领中</span>
+            <h3>AirPods Max银色 (白色耳机套)</h3>
+            <p>地点：主图书馆 402B自习室</p>
+            <p>15分钟前拾取</p>
+          </div>
+        </div>
+
+        <div class="modal-actions-col">
+          <button id="go-detail-btn" class="btn-primary">是的，去核对详情</button>
+          <button id="continue-publish-btn" class="btn-secondary">不是我的，继续发布</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 弹窗 2：发布成功 (默认隐藏) -->
+    <div id="success-modal" class="modal-overlay hidden">
+      <div class="modal-content center-popup">
+        <div class="success-icon">
+          <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        </div>
+        <h2>发布成功！</h2>
+        <p class="modal-desc">您的信息已上链/展示在广场。我们会在有人搜索或发布类似物品时第一时间通知您。</p>
+        <ul class="success-tips">
+          <li>祝您早日找回失物！您也可以在“我的”页面随时追踪状态。</li>
+        </ul>
+        <div class="modal-actions-row">
+          <button id="back-home-btn" class="btn-secondary">返回首页</button>
+          <button id="view-profile-btn" class="btn-primary">查看我的发布</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/publish.js"></script>
+</body>
+</body>
+</html>
