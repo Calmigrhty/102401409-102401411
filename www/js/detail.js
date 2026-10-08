@@ -97,8 +97,8 @@ function bindEvents(post) {
     setTimeout(() => {
       successBanner.classList.remove('hidden');
       
-      // 可选：将原来的按钮变淡，让用户的视觉焦点转移到下面的横幅上
-      getContactBtn.style.opacity = "0.5";
+      // 把原来的 0.5 改成 0，原按钮就会完全隐身，给新弹窗腾出视觉空间
+      getContactBtn.style.opacity = "0"; 
       getContactBtn.style.pointerEvents = "none";
     }, 200);
   });

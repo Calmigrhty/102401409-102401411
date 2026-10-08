@@ -48,12 +48,14 @@
 /* 按钮 */
 .get-contact-btn { width: 100%; padding: 16px; border-radius: 12px; font-size: 16px; margin-bottom: 60px; transition: opacity 0.3s ease; }
 
-/* 底部浮出成功横幅 */
+/* ================= 修复：成功横幅过宽且完美盖住原按钮 ================= */
 .success-banner {
   position: fixed;
-  bottom: 30px;
-  left: 20px;
-  right: 20px;
+  bottom: 40px; /* 调整底部距离，正好上浮盖住原来的获取联系方式按钮 */
+  left: 50%;
+  width: calc(100% - 40px); /* 保持左右留白 */
+  max-width: 390px; /* 强制限制最大宽度，防止在电脑屏幕上被无限拉长 */
+  
   background: #f0fdf4;
   border: 1px solid #bbf7d0;
   border-radius: 12px;
@@ -63,9 +65,18 @@
   align-items: center;
   z-index: 100;
   box-shadow: 0 8px 24px rgba(74, 222, 128, 0.15);
+  
+  /* 核心细节：必须把水平居中(X)和滑出动画(Y)写在同一个 transform 里，否则动画会乱跳 */
+  transform: translateX(-50%) translateY(0);
   transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
 }
-.success-banner.hidden { opacity: 0; pointer-events: none; transform: translateY(100px); }
+
+.success-banner.hidden {
+  opacity: 0;
+  pointer-events: none;
+  /* 隐藏状态：水平依然保持居中，垂直方向掉出屏幕 */
+  transform: translateX(-50%) translateY(100px);
+}
 .banner-content h4 { margin: 0 0 4px; color: #166534; font-size: 15px; font-weight: 600; }
 .banner-content p { margin: 0; color: #666; font-size: 12px; }
 .banner-btn { padding: 10px 20px; border-radius: 8px; font-size: 13px; width: auto; margin: 0; background: #4cae4f; } /* 稍微深一点的绿色按钮 */
