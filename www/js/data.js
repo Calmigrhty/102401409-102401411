@@ -80,5 +80,37 @@ const INITIAL_POSTS = [
     publishTime: "2026-10-07 12:30",
     status: "active",
     image: "assets/images/campus-card.jpg"
+  },
+
+  {
+    id: "post-006",
+    type: "lost",
+    category: "其他",
+    title: "灰色北面双肩包",
+    location: "西区教学楼",
+    description:
+      "灰色北面双肩包，包内有教材和一些个人用品。遗失后一直没有找到，如有拾到请联系我核对包内物品。",
+    contactType: "微信",
+    contact: "user_me",
+    publisher: "我自己",
+    publishTime: "2026-09-26 10:00",
+    status: "resolved",
+    image: ""
+  },
+
+  {
+    id: "post-007",
+    type: "lost",
+    category: "数码电子",
+    title: "蓝色 Yeti 麦克风",
+    location: "计算机实验室",
+    description:
+      "蓝色 Yeti USB 麦克风，底座有轻微划痕，在实验室使用后遗失。",
+    contactType: "微信",
+    contact: "user_me",
+    publisher: "我自己",
+    publishTime: "2026-09-18 10:00",
+    status: "active",
+    image: ""
   }
 ];

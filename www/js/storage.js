@@ -1,4 +1,5 @@
 const STORAGE_KEY = "lostFoundPosts";
+const PROFILE_POSTS_MIGRATION_KEY = "profilePostsSeeded";
 
 // 初始化帖子数据
 function initPosts() {
@@ -6,7 +7,25 @@ function initPosts() {
 
   if (!posts) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(INITIAL_POSTS));
+    localStorage.setItem(PROFILE_POSTS_MIGRATION_KEY, "true");
+    return;
   }
+
+  if (localStorage.getItem(PROFILE_POSTS_MIGRATION_KEY)) {
+    return;
+  }
+
+  const savedPosts = JSON.parse(posts);
+  const existingIds = new Set(savedPosts.map(post => post.id));
+  const missingProfilePosts = INITIAL_POSTS.filter(
+    post => post.publisher === "我自己" && !existingIds.has(post.id)
+  );
+
+  if (missingProfilePosts.length > 0) {
+    savePosts([...savedPosts, ...missingProfilePosts]);
+  }
+
+  localStorage.setItem(PROFILE_POSTS_MIGRATION_KEY, "true");
 }
 
 // 获取全部帖子

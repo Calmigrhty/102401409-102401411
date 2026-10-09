@@ -4,28 +4,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function renderMyPosts() {
   const postList = document.getElementById("my-posts-list");
-  const posts = getPosts(); 
+  const posts = getPosts();
 
   // 筛选出属于当前用户的帖子 (在 publish.js 中我们写死了 publisher 为 "我自己")
-  let myPosts = posts.filter(post => post.publisher === "我自己");
-
-  // 为了能够在结对演示时直接看到图里的效果，如果没有真实数据，塞入两条 Mock 数据
-  if (myPosts.length === 0) {
-    myPosts = [
-      { id: "mock-1", title: "灰色北面双肩包", publishTime: "2026-09-26T10:00:00", image: "", status: "resolved" },
-      { id: "mock-2", title: "蓝色 Yeti 麦克风", publishTime: "2026-09-18T10:00:00", image: "", status: "active" }
-    ];
-  }
+  const myPosts = posts.filter(post => post.publisher === "我自己");
 
   // 动态更新顶部的数字统计
   const publishedCount = myPosts.length;
   document.getElementById("stat-published").textContent = publishedCount;
   
   // 【修改这里】动态计算已解决的数量，而不是写死 12
-  const resolvedCount = myPosts.filter(post => post.status === "resolved").length + 12;
+  const resolvedCount = myPosts.filter(post => post.status === "resolved").length;
   document.getElementById("stat-resolved").textContent = resolvedCount;
 
   postList.innerHTML = "";
+
+  if (myPosts.length === 0) {
+    postList.innerHTML = `
+      <div class="empty-tip">暂无发布记录</div>
+    `;
+    return;
+  }
 
   myPosts.forEach(post => {
     const card = document.createElement("div");

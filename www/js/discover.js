@@ -16,9 +16,10 @@ function renderDiscoverPosts(category = "all", searchQuery = "") {
 
   // 筛选逻辑：类别筛选 + 搜索词筛选
   const filteredPosts = posts.filter(post => {
+    const isActive = post.status === "active";
     const matchCategory = category === "all" || post.category === category;
     const matchSearch = searchQuery === "" || post.title.includes(searchQuery) || post.description.includes(searchQuery);
-    return matchCategory && matchSearch;
+    return isActive && matchCategory && matchSearch;
   });
 
   postList.innerHTML = "";

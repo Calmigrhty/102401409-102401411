@@ -18,9 +18,9 @@ function renderPosts(type = "all") {
   const posts = getPosts(); //[cite: 13, 12]
 
   const filteredPosts =
-    type === "all"
-      ? posts
-      : posts.filter(post => post.type === type); //[cite: 12]
+    posts.filter(post =>
+      post.status === "active" && (type === "all" || post.type === type)
+    ); //[cite: 12]
 
   postList.innerHTML = ""; //[cite: 12]
 
