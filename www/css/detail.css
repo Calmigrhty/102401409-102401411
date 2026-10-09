@@ -79,7 +79,16 @@
 }
 .banner-content h4 { margin: 0 0 4px; color: #166534; font-size: 15px; font-weight: 600; }
 .banner-content p { margin: 0; color: #666; font-size: 12px; }
-.banner-btn { padding: 10px 20px; border-radius: 8px; font-size: 13px; width: auto; margin: 0; background: #4cae4f; } /* 稍微深一点的绿色按钮 */
+.success-banner .banner-btn {
+  flex: 0 0 auto;
+  width: auto;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  white-space: nowrap;
+  margin: 0;
+  background: #4cae4f;
+}
 
 /* 安全隐私弹窗专用 */
 .safety-popup { padding: 30px 24px; text-align: center; }

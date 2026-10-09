@@ -59,16 +59,45 @@ function bindEvents(post) {
     window.location.href = "index.html";
   });
   
-  // 底部横幅返回首页
-  document.getElementById('banner-back-btn').addEventListener('click', () => {
-    window.location.href = "index.html";
-  });
-
   const getContactBtn = document.getElementById('get-contact-btn');
   const safetyModal = document.getElementById('safety-modal');
   const cancelBtn = document.getElementById('cancel-modal-btn');
   const confirmBtn = document.getElementById('confirm-modal-btn');
   const successBanner = document.getElementById('success-banner');
+  const contactInfo = document.getElementById('contact-info');
+  const copyContactBtn = document.getElementById('copy-contact-btn');
+
+  copyContactBtn.addEventListener('click', async () => {
+    const text = `${post.contactType}：${post.contact}`;
+
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+      } else {
+        const temporaryInput = document.createElement('textarea');
+        temporaryInput.value = text;
+        temporaryInput.setAttribute('readonly', '');
+        temporaryInput.style.position = 'fixed';
+        temporaryInput.style.opacity = '0';
+        document.body.appendChild(temporaryInput);
+        temporaryInput.select();
+        const copied = document.execCommand('copy');
+        temporaryInput.remove();
+
+        if (!copied) {
+          throw new Error('Clipboard copy command was rejected');
+        }
+      }
+
+      copyContactBtn.textContent = '已复制';
+      setTimeout(() => {
+        copyContactBtn.textContent = '复制联系方式';
+      }, 2000);
+    } catch (error) {
+      console.error('复制联系方式失败', error);
+      alert('复制失败，请手动复制显示的联系方式');
+    }
+  });
 
   // 如果已经解决，按钮变灰
   if (post.status === "resolved") {
@@ -92,6 +121,7 @@ function bindEvents(post) {
   // 3. 我已了解 -> 关闭弹窗，底部丝滑滑出成功横幅
   confirmBtn.addEventListener('click', () => {
     safetyModal.classList.add('hidden');
+    contactInfo.textContent = `${post.contactType}：${post.contact}`;
     
     // 给一点点延迟，让弹窗消失后再滑出横幅，动画更高级
     setTimeout(() => {

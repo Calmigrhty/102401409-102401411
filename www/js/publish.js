@@ -29,9 +29,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const titleInput = document.querySelector('input[placeholder="填写物品名称"]').value.trim();
     const categoryInput = document.querySelector('.cat-btn.active').dataset.category;
     const typeInput = document.querySelector('.type-btn.active').dataset.type;
+    const contactInput = document.getElementById("contact-input").value.trim();
 
     if (!titleInput) {
-      alert("请至少填写物品名称");
+      alert("请填写物品名称");
+      return;
+    }
+
+    if (!contactInput) {
+      alert("请填写联系方式");
       return;
     }
 
@@ -92,6 +98,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const description = document.querySelector('textarea').value;
     const type = document.querySelector('.type-btn.active').dataset.type;
     const category = document.querySelector('.cat-btn.active').dataset.category;
+    const contactType = document.getElementById("contact-type").value;
+    const contact = document.getElementById("contact-input").value.trim();
 
     // 2. 组装成一个新的物品对象
     const newPost = {
@@ -101,8 +109,8 @@ document.addEventListener("DOMContentLoaded", () => {
       title: document.querySelector('input[placeholder="填写物品名称"]').value || "未命名物品",
       location: document.querySelector('input[placeholder="填写地点"]').value || "未知地点",
       description: document.querySelector('textarea').value || "无详细描述",
-      contactType: "微信", 
-      contact: "user_me",
+      contactType: contactType,
+      contact: contact,
       publisher: "我自己",
       publishTime: new Date().toISOString().replace('T', ' ').substring(0, 16),
       status: "active",
