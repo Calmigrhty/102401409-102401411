@@ -48,3 +48,36 @@ function getPostById(id) {
 
   return posts.find(post => post.id === id);
 }
+
+function updatePost(id, updates) {
+  const posts = getPosts();
+  const postIndex = posts.findIndex(post => post.id === id);
+
+  if (postIndex === -1) {
+    return false;
+  }
+
+  const currentPost = posts[postIndex];
+  posts[postIndex] = {
+    ...currentPost,
+    ...updates,
+    id: currentPost.id,
+    publisher: currentPost.publisher,
+    publishTime: currentPost.publishTime,
+    status: currentPost.status
+  };
+  savePosts(posts);
+  return true;
+}
+
+function deletePost(id) {
+  const posts = getPosts();
+  const remainingPosts = posts.filter(post => post.id !== id);
+
+  if (remainingPosts.length === posts.length) {
+    return false;
+  }
+
+  savePosts(remainingPosts);
+  return true;
+}

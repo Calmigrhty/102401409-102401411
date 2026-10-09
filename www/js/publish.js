@@ -1,4 +1,42 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const params = new URLSearchParams(window.location.search);
+  const isEditMode = params.has("edit");
+  const editId = params.get("edit");
+  const editPost = isEditMode && editId ? getPostById(editId) : null;
+
+  if (isEditMode && (!editId || !editPost || editPost.publisher !== "我自己")) {
+    alert("无法编辑该发布信息");
+    window.location.href = "profile.html";
+    return;
+  }
+
+  let uploadedImageBase64 = editPost?.image || "";
+
+  if (editPost) {
+    document.querySelector("header h1").textContent = "编辑信息";
+    document.getElementById("submit-btn").textContent = "保存修改";
+    document.querySelector('input[placeholder="填写物品名称"]').value = editPost.title;
+    document.querySelector('input[placeholder="填写地点"]').value = editPost.location;
+    document.querySelector("textarea").value = editPost.description;
+    document.getElementById("contact-type").value = editPost.contactType;
+    document.getElementById("contact-input").value = editPost.contact;
+
+    document.querySelectorAll(".type-btn").forEach(button => {
+      button.classList.toggle("active", button.dataset.type === editPost.type);
+    });
+    document.querySelectorAll(".cat-btn").forEach(button => {
+      button.classList.toggle("active", button.dataset.category === editPost.category);
+    });
+
+    if (editPost.image) {
+      document.getElementById("upload-text").style.display = "none";
+      const imagePreview = document.getElementById("image-preview");
+      imagePreview.src = editPost.image;
+      imagePreview.style.display = "block";
+      document.getElementById("upload-box").style.border = "none";
+    }
+  }
+
   // 1. 处理选项按钮的激活切换
   const setupToggle = (selector) => {
     const buttons = document.querySelectorAll(selector);
@@ -38,6 +76,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!contactInput) {
       alert("请填写联系方式");
+      return;
+    }
+
+    if (editPost) {
+      const updated = updatePost(editPost.id, {
+        type: typeInput,
+        category: categoryInput,
+        title: titleInput,
+        location: document.querySelector('input[placeholder="填写地点"]').value,
+        description: document.querySelector("textarea").value,
+        contactType: document.getElementById("contact-type").value,
+        contact: contactInput,
+        image: uploadedImageBase64
+      });
+
+      if (!updated) {
+        alert("该物品不存在或已被删除");
+        window.location.href = "profile.html";
+        return;
+      }
+
+      successModal.querySelector("h2").textContent = "修改成功！";
+      successModal.querySelector(".modal-desc").textContent =
+        "修改已保存，可在首页和“我的发布”中查看。";
+      successModal.classList.remove("hidden");
       return;
     }
 
@@ -96,8 +159,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const title = document.querySelector('input[placeholder="填写物品名称"]').value;
     const location = document.querySelector('input[placeholder="填写地点"]').value;
     const description = document.querySelector('textarea').value;
-    const type = document.querySelector('.type-btn.active').dataset.type;
-    const category = document.querySelector('.cat-btn.active').dataset.category;
     const contactType = document.getElementById("contact-type").value;
     const contact = document.getElementById("contact-input").value.trim();
 
@@ -106,7 +167,7 @@ document.addEventListener("DOMContentLoaded", () => {
       id: "post-" + Date.now(),
       type: document.querySelector('.type-btn.active').dataset.type,
       category: document.querySelector('.cat-btn.active').dataset.category,
-      title: document.querySelector('input[placeholder="填写物品名称"]').value || "未命名物品",
+      title: title || "未命名物品",
       location: document.querySelector('input[placeholder="填写地点"]').value || "未知地点",
       description: document.querySelector('textarea').value || "无详细描述",
       contactType: contactType,
@@ -146,8 +207,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const fileInput = document.getElementById("file-input");
   const uploadText = document.getElementById("upload-text");
   const imagePreview = document.getElementById("image-preview");
-  
-  let uploadedImageBase64 = ""; // 核心：用来暂存转换后的图片数据
 
   // 1. 点击虚线框，拉起系统的文件选择器
   uploadBox.addEventListener("click", () => {

@@ -66,7 +66,11 @@ function renderMyPosts() {
       <div class="list-card-content">
         <h4>${post.title}</h4>
         <p>发布于 ${dateStr}</p>
-        <button class="${btnClass}">${btnText}</button>
+        <div class="list-card-actions">
+          <button class="${btnClass}">${btnText}</button>
+          <button class="edit-post-btn">编辑</button>
+          <button class="delete-post-btn">删除</button>
+        </div>
       </div>
     `;
 
@@ -87,6 +91,19 @@ function renderMyPosts() {
 
       if (confirm(confirmText)) {
         markAsResolved(post.id);
+      }
+    });
+
+    card.querySelector(".edit-post-btn").addEventListener("click", (e) => {
+      e.stopPropagation();
+      window.location.href = `publish.html?edit=${encodeURIComponent(post.id)}`;
+    });
+
+    card.querySelector(".delete-post-btn").addEventListener("click", (e) => {
+      e.stopPropagation();
+      if (confirm("确定要删除这条发布信息吗？删除后无法恢复。")) {
+        deletePost(post.id);
+        renderMyPosts();
       }
     });
 
