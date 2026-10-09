@@ -66,6 +66,13 @@ function bindEvents(post) {
   const successBanner = document.getElementById('success-banner');
   const contactInfo = document.getElementById('contact-info');
   const copyContactBtn = document.getElementById('copy-contact-btn');
+  const closeContactBtn = document.getElementById('close-contact-btn');
+
+  closeContactBtn.addEventListener('click', () => {
+    successBanner.classList.add('hidden');
+    getContactBtn.style.opacity = "1";
+    getContactBtn.style.pointerEvents = "auto";
+  });
 
   copyContactBtn.addEventListener('click', async () => {
     const text = `${post.contactType}：${post.contact}`;

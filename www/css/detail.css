@@ -63,6 +63,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 12px;
   z-index: 100;
   box-shadow: 0 8px 24px rgba(74, 222, 128, 0.15);
   
@@ -79,15 +80,31 @@
 }
 .banner-content h4 { margin: 0 0 4px; color: #166534; font-size: 15px; font-weight: 600; }
 .banner-content p { margin: 0; color: #666; font-size: 12px; }
+.banner-content {
+  min-width: 0;
+  flex: 1;
+}
+#contact-info { overflow-wrap: anywhere; }
+.banner-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
 .success-banner .banner-btn {
   flex: 0 0 auto;
   width: auto;
-  padding: 12px 16px;
+  padding: 10px 12px;
   border-radius: 8px;
-  font-size: 13px;
+  font-size: 12px;
   white-space: nowrap;
   margin: 0;
+}
+.success-banner #copy-contact-btn {
   background: #4cae4f;
+}
+.success-banner #close-contact-btn {
+  background: #e5e7eb;
+  color: #4b5563;
 }
 
 /* 安全隐私弹窗专用 */
