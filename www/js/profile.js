@@ -34,35 +34,14 @@ function renderMyPosts() {
     const d = new Date(post.publishTime);
     const dateStr = `${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日`;
 
-    // 2. 引入类别与 Emoji 的映射字典
-    const icons = {
-      "数码电子": "🎧",
-      "日常用品": "🧴",
-      "卡片证件": "💳",
-      "交通工具": "🚲",
-      "其他": "📦"
-    };
-    // 如果碰巧遇到了没有存类别的脏数据，默认给个纸箱子
-    const fallbackIcon = icons[post.category] || "📦";
-
-    // 3. 动态判断：有图渲染图，没图渲染 Emoji
-    let mediaContent = "";
-    if (post.image && post.image.trim() !== "") {
-      mediaContent = `<img src="${post.image}" class="list-card-img" onerror="this.outerHTML='<div class=\\'list-icon-fallback\\'>${fallbackIcon}</div>'">`;
-    } else {
-      mediaContent = `<div class="list-icon-fallback">${fallbackIcon}</div>`;
-    }
-
-    // 4. 判断状态渲染不同按钮
+    // 2. 判断状态渲染不同按钮
     const isResolved = post.status === "resolved";
     const btnClass = isResolved ? "status-btn resolved" : "status-btn";
     const btnText = post.type === "lost"
       ? (isResolved ? "已找到" : "标记为已找到")
       : (isResolved ? "已归还" : "标记为已归还");
 
-    // 5. 组装最终的 HTML 结构 (将 mediaContent 拼进去)
     card.innerHTML = `
-      ${mediaContent}
       <div class="list-card-content">
         <h4>${post.title}</h4>
         <p>发布于 ${dateStr}</p>
@@ -73,6 +52,7 @@ function renderMyPosts() {
         </div>
       </div>
     `;
+    card.prepend(createPostImage(post, "list-card-img"));
 
     // 交互 1：点击整张卡片，跳转详情页
     card.addEventListener("click", () => {

@@ -132,19 +132,19 @@ document.addEventListener("DOMContentLoaded", () => {
       const dupCard = document.querySelector('.duplicate-card');
       const tagText = similarPost.type === "found" ? "招领中" : "寻物中";
       
-      // 容错处理图片：有图渲染原图，没图渲染 emoji 占位符
-      const imgHtml = similarPost.image 
-        ? `<img src="${similarPost.image}" alt="${similarPost.title}">`
-        : `<div style="width:70px;height:70px;background:#f0f1f3;display:flex;align-items:center;justify-content:center;border-radius:8px;font-size:32px;">📦</div>`;
-
-      dupCard.innerHTML = `
-        ${imgHtml}
-        <div class="duplicate-info">
-          <span class="tag-type">${tagText}</span>
-          <h3>${similarPost.title}</h3>
-          <p>地点：${similarPost.location}</p>
-        </div>
+      const duplicateInfo = document.createElement("div");
+      duplicateInfo.className = "duplicate-info";
+      duplicateInfo.innerHTML = `
+        <span class="tag-type">${tagText}</span>
+        <h3></h3>
+        <p></p>
       `;
+      duplicateInfo.querySelector("h3").textContent = similarPost.title;
+      duplicateInfo.querySelector("p").textContent = `地点：${similarPost.location}`;
+      dupCard.replaceChildren(
+        createPostImage(similarPost),
+        duplicateInfo
+      );
 
       // 把找到的物品真实 ID 绑在“去核对详情”按钮的 data 属性上
       goDetailBtn.dataset.targetId = similarPost.id;

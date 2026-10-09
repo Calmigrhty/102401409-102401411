@@ -42,15 +42,9 @@ function renderDetail(post) {
     <span style="color:#666; background:#f5f6f8;">${post.category}</span>
   `;
 
-  // 大图与 Emoji 优雅降级
+  // 大图优先使用帖子图片；缺图或加载失败时使用类别默认图
   const mediaContainer = document.getElementById('detail-media');
-  if (post.image && post.image.trim() !== "") {
-    mediaContainer.innerHTML = `<img src="${post.image}" alt="${post.title}" onerror="this.outerHTML='<div class=\\'emoji-fallback\\'>📦</div>'">`;
-  } else {
-    const icons = { "数码电子": "🎧", "日常用品": "🧴", "卡片证件": "💳", "交通工具": "🚲", "其他": "📦" };
-    const fallbackIcon = icons[post.category] || "📦";
-    mediaContainer.innerHTML = `<div class="emoji-fallback">${fallbackIcon}</div>`;
-  }
+  mediaContainer.replaceChildren(createPostImage(post));
 }
 
 function bindEvents(post) {

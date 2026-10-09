@@ -4,7 +4,6 @@
 .detail-hero { position: relative; width: 100%; height: 340px; background: #f5f6f8; }
 .detail-media { width: 100%; height: 100%; }
 .detail-media img { width: 100%; height: 100%; object-fit: cover; }
-.detail-media .emoji-fallback { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 100px; }
 
 .top-back-btn {
   position: absolute;
