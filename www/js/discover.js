@@ -3,8 +3,8 @@ let currentCategory = "all";
 // 借用首页的时间计算函数
 function getTimeAgo(timeStr) {
   const publishTime = new Date(timeStr).getTime();
-  const now = new Date("2026-10-08T15:40:00").getTime(); 
-  const diffHours = Math.floor((now - publishTime) / (1000 * 60 * 60));
+  const diffMs = Math.max(0, Date.now() - publishTime);
+  const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
   if (diffHours < 1) return "刚刚";
   if (diffHours < 24) return `${diffHours}小时前`;
   return `${Math.floor(diffHours / 24)}天前`;

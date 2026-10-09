@@ -4,8 +4,8 @@ let currentType = "all";
 // 因为 initial_posts 里的发布时间是 "2026-10-07 13:45" 这种格式
 function getTimeAgo(timeStr) {
   const publishTime = new Date(timeStr).getTime();
-  const now = new Date("2026-10-08T15:40:00").getTime(); // 为了配合设计图效果锁定当前时间基准，真实项目可直接用 new Date().getTime()
-  const diffHours = Math.floor((now - publishTime) / (1000 * 60 * 60));
+  const diffMs = Math.max(0, Date.now() - publishTime);
+  const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
   
   if (diffHours < 1) return "刚刚";
   if (diffHours < 24) return `${diffHours}小时前`;
@@ -15,19 +15,19 @@ function getTimeAgo(timeStr) {
 // 将帖子显示到首页
 function renderPosts(type = "all") {
   const postList = document.getElementById("post-list");
-  const posts = getPosts(); //[cite: 13, 12]
+  const posts = getPosts();
 
   const filteredPosts =
     posts.filter(post =>
       post.status === "active" && (type === "all" || post.type === type)
-    ); //[cite: 12]
+    );
 
-  postList.innerHTML = ""; //[cite: 12]
+  postList.innerHTML = "";
 
   if (filteredPosts.length === 0) {
     postList.innerHTML = `
       <p class="empty-tip">暂无相关信息</p>
-    `; //[cite: 12]
+    `;
     return;
   }
 
@@ -73,26 +73,26 @@ function renderPosts(type = "all") {
   });
 }
 
-// 处理顶部筛选按钮[cite: 12]
+// 处理顶部筛选按钮
 function setupFilters() {
-  const buttons = document.querySelectorAll(".filter-btn"); //[cite: 12]
+  const buttons = document.querySelectorAll(".filter-btn");
 
-  buttons.forEach(button => { //[cite: 12]
-    button.addEventListener("click", () => { //[cite: 12]
+  buttons.forEach(button => {
+    button.addEventListener("click", () => {
       buttons.forEach(item =>
-        item.classList.remove("active") //[cite: 12]
+        item.classList.remove("active")
       );
 
-      button.classList.add("active"); //[cite: 12]
-      currentType = button.dataset.type; //[cite: 12]
-      renderPosts(currentType); //[cite: 12]
+      button.classList.add("active");
+      currentType = button.dataset.type;
+      renderPosts(currentType);
     });
   });
 }
 
-// 页面初始化[cite: 12]
-document.addEventListener("DOMContentLoaded", () => { //[cite: 12]
-  initPosts(); //[cite: 12]
-  renderPosts(); //[cite: 12]
-  setupFilters(); //[cite: 12]
+// 页面初始化
+document.addEventListener("DOMContentLoaded", () => {
+  initPosts();
+  renderPosts();
+  setupFilters();
 });
