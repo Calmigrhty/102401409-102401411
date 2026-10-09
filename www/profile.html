@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>我的 - 校园失物招领</title>
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/profile.css">
+</head>
+<body>
+  <div class="app">
+    <main class="profile-main">
+      <!-- 用户信息区 -->
+      <div class="user-info">
+        <div class="avatar-container">
+          <img src="assets/images/student1.jpg" onerror="this.src='https://via.placeholder.com/80'" alt="Avatar" class="avatar">
+        </div>
+        <h2>同学1</h2>
+        <p>本科生 · 计算机科学与技术</p>
+      </div>
+
+      <!-- 数据统计区 -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-num" id="stat-published">3</div>
+          <div class="stat-label">已发布</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" id="stat-resolved">12</div>
+          <div class="stat-label">已找回/归还</div>
+        </div>
+      </div>
+
+      <!-- 帖子列表区 -->
+      <div class="my-posts-section">
+        <h3 class="section-title">我发布的帖子</h3>
+        <div id="my-posts-list" class="my-posts-list">
+          <!-- JS 动态渲染 -->
+        </div>
+      </div>
+    </main>
+
+    <!-- 底部导航 (注意：我的 处于 active 状态) -->
+    <nav class="bottom-nav">
+      <a href="index.html">
+        <svg viewBox="1 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg><span>首页</span>
+      </a>
+      <a href="discover.html">
+        <svg viewBox="1 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm2.19 12.19L6 18l3.81-8.19L18 6l-3.81 8.19z"/></svg><span>发现</span>
+      </a>
+      <a href="publish.html">
+        <svg viewBox="1 0 24 24"><path d="M20 14h-6v6h-4v-6H4v-4h6V4h4v6h6v4z"/></svg><span>发布</span>
+      </a>
+      <a href="profile.html" class="active">
+        <svg viewBox="1 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg><span>我的</span>
+      </a>
+    </nav>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/profile.js"></script>
+</body>
+</html>

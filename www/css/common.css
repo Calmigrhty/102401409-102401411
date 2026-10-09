@@ -4,8 +4,8 @@
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  background: #f5f6f8;
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Segoe UI", sans-serif;
+  background: #f5f6f8; /* 整体页面底色稍灰，以凸显白色卡片 */
   color: #222;
 }
 
@@ -20,32 +20,54 @@ textarea {
   max-width: 430px;
   min-height: 100vh;
   margin: 0 auto;
-  background: #ffffff;
-  padding-bottom: 72px;
+  background: #f9f9fa; /* 将白色背景改为浅灰[cite: 9, 8] */
+  padding-bottom: 100px; /* 为悬浮导航栏留出足够的底部滚动空间 */
+  position: relative;
 }
 
+/* 底部悬浮胶囊导航 */
 .bottom-nav {
   position: fixed;
-  bottom: 0;
+  bottom: 24px;
   left: 50%;
   transform: translateX(-50%);
-  width: 100%;
-  max-width: 430px;
-  height: 64px;
+  width: 90%;
+  max-width: 390px;
+  height: 68px;
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  background: #ffffff;
-  border-top: 1px solid #eeeeee;
+  justify-content: center;
+  gap: 18px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px); /* 毛玻璃效果 */
+  border-radius: 34px; /* 大圆角胶囊 */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08); /* 去除原有的 border-top[cite: 9]，改为柔和阴影 */
+  z-index: 100;
 }
 
 .bottom-nav a {
-  color: #777777;
+  color: #999999; /* 默认灰色[cite: 9] */
   text-decoration: none;
-  font-size: 14px;
+  font-size: 11px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 5.5px 19.5px;
+  border-radius: 32px;
+  transition: all 0.2s ease;
 }
 
+.bottom-nav a svg {
+  width: 40px;
+  height: 22px;
+  fill: currentColor;
+}
+
+/* 激活状态：绿色底色块与绿色图标文字 */
 .bottom-nav a.active {
-  color: #222222;
+  color: #34c759; 
+  background: #eafff0;
   font-weight: 600;
 }

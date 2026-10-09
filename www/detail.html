@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>物品详情 - 校园失物招领</title>
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/detail.css">
+</head>
+<body>
+  <div class="app detail-app">
+    <!-- 顶部沉浸式大图区 -->
+    <div class="detail-hero">
+      <div id="detail-media" class="detail-media"></div>
+      <!-- 右上角悬浮返回按钮 -->
+      <button id="top-back-btn" class="top-back-btn">返回首页</button>
+    </div>
+
+    <main class="detail-main">
+      <!-- 标签与标题 -->
+      <div class="detail-tags" id="detail-tags"></div>
+      <h1 id="detail-title">加载中...</h1>
+      
+      <hr class="divider">
+
+      <!-- 发布者名片 -->
+      <div class="publisher-info">
+        <img src="assets/images/student2.jpg" onerror="this.src='https://via.placeholder.com/44'" class="pub-avatar">
+        <div class="pub-text">
+          <div class="pub-name" id="detail-publisher">--</div>
+          <div class="pub-verify">已认证 · 计算机科学与技术 大三</div>
+        </div>
+      </div>
+
+      <!-- 时间与地点 -->
+      <div class="meta-info">
+        <div class="meta-item">
+          <!-- 时钟 Icon -->
+          <svg viewBox="0 0 24 24" class="icon-green"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+          <span id="detail-time">--</span>
+        </div>
+        <div class="meta-item">
+          <!-- 地点定位 Icon -->
+          <svg viewBox="0 0 24 24" class="icon-green"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+          <span id="detail-location">--</span>
+        </div>
+      </div>
+
+      <!-- 补充描述 -->
+      <div class="desc-section">
+        <h3>补充描述</h3>
+        <p id="detail-desc">--</p>
+      </div>
+
+      <!-- 获取联系方式按钮 (跟随在内容最下方) -->
+      <button id="get-contact-btn" class="btn-primary get-contact-btn">获取联系方式</button>
+    </main>
+
+    <!-- 弹窗 1：安全与隐私保护须知 -->
+    <div id="safety-modal" class="modal-overlay hidden">
+      <div class="modal-content center-popup safety-popup">
+        <div class="security-icon-circle">
+          <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+        </div>
+        <h2>安全与隐私保护须知</h2>
+        <p class="modal-desc">为保障您的个人安全和防范欺诈风险，线下交付时请务必注意：</p>
+        <ul class="safety-tips">
+          <li>建议约在校内公共场所（如食堂、图书馆）进行认领交付。</li>
+          <li>切勿轻易进行任何线上转账或支付所谓的“感谢金”。</li>
+        </ul>
+        <div class="modal-actions-row">
+          <button id="cancel-modal-btn" class="btn-secondary">取消</button>
+          <button id="confirm-modal-btn" class="btn-primary">我已了解</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 弹窗 2：成功获取后的底部滑出横幅 -->
+    <div id="success-banner" class="success-banner hidden">
+      <div class="banner-content">
+        <h4>联系方式已获取</h4>
+        <p>请先核对物品信息</p>
+      </div>
+      <button id="banner-back-btn" class="btn-primary banner-btn">返回首页</button>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/detail.js"></script>
+</body>
+</html>
