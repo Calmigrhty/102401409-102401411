@@ -108,7 +108,9 @@ function bindEvents(post) {
 
   // 如果已经解决，按钮变灰
   if (post.status === "resolved") {
-    getContactBtn.textContent = "该物品已解决";
+    getContactBtn.textContent = post.type === "lost"
+      ? "该物品已找到"
+      : "该物品已归还";
     getContactBtn.style.background = "#f5f6f8";
     getContactBtn.style.color = "#999999";
     getContactBtn.style.cursor = "not-allowed";

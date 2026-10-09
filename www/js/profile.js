@@ -56,7 +56,9 @@ function renderMyPosts() {
     // 4. 判断状态渲染不同按钮
     const isResolved = post.status === "resolved";
     const btnClass = isResolved ? "status-btn resolved" : "status-btn";
-    const btnText = isResolved ? "已解决" : "标记为已解决";
+    const btnText = post.type === "lost"
+      ? (isResolved ? "已找到" : "标记为已找到")
+      : (isResolved ? "已归还" : "标记为已归还");
 
     // 5. 组装最终的 HTML 结构 (将 mediaContent 拼进去)
     card.innerHTML = `
@@ -73,12 +75,17 @@ function renderMyPosts() {
       window.location.href = `detail.html?id=${post.id}`;
     });
 
-    // 交互 2：点击【标记为已解决】按钮
+    // 交互 2：点击状态更新按钮
     const statusBtn = card.querySelector(".status-btn");
     statusBtn.addEventListener("click", (e) => {
       e.stopPropagation(); // 阻止冒泡
-      if (isResolved) return; 
-      if(confirm("确定要将该物品标记为已解决吗？")) {
+      if (isResolved) return;
+
+      const confirmText = post.type === "lost"
+        ? "确定要将该物品标记为已找到吗？"
+        : "确定要将该物品标记为已归还吗？";
+
+      if (confirm(confirmText)) {
         markAsResolved(post.id);
       }
     });
