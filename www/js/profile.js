@@ -83,15 +83,7 @@ function renderMyPosts() {
     const statusBtn = card.querySelector(".status-btn");
     statusBtn.addEventListener("click", (e) => {
       e.stopPropagation(); // 阻止冒泡
-      if (isResolved) return;
-
-      const confirmText = post.type === "lost"
-        ? "确定要将该物品标记为已找到吗？"
-        : "确定要将该物品标记为已归还吗？";
-
-      if (confirm(confirmText)) {
-        markAsResolved(post.id);
-      }
+      togglePostStatus(post.id);
     });
 
     card.querySelector(".edit-post-btn").addEventListener("click", (e) => {
@@ -102,7 +94,9 @@ function renderMyPosts() {
     card.querySelector(".delete-post-btn").addEventListener("click", (e) => {
       e.stopPropagation();
       if (confirm("确定要删除这条发布信息吗？删除后无法恢复。")) {
-        deletePost(post.id);
+        if (!deletePost(post.id)) {
+          alert("该物品不存在或已被删除");
+        }
         renderMyPosts();
       }
     });
@@ -111,13 +105,26 @@ function renderMyPosts() {
   });
 }
 
-// 核心业务：修改状态并保存回本地数据库
-function markAsResolved(id) {
+// 在 active 与 resolved 之间切换状态并保存
+function togglePostStatus(id) {
   const posts = getPosts();
   const targetPost = posts.find(p => p.id === id);
-  if (targetPost) {
-    targetPost.status = "resolved"; // 修改状态
-    savePosts(posts); // 存回 localStorage
-    renderMyPosts(); // 重新渲染页面刷新 UI
+  if (!targetPost) {
+    return;
   }
+
+  const isResolved = targetPost.status === "resolved";
+  if (isResolved) {
+    const confirmText = targetPost.type === "lost"
+      ? "确定要恢复为寻找中吗？"
+      : "确定要恢复为招领中吗？";
+
+    if (!confirm(confirmText)) {
+      return;
+    }
+  }
+
+  targetPost.status = isResolved ? "active" : "resolved";
+  savePosts(posts);
+  renderMyPosts();
 }

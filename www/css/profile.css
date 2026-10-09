@@ -131,7 +131,7 @@
   border-color: transparent;
   background: #eafff0;
   color: #4ade80;
-  cursor: default; /* 变成实心浅绿色且不可点击 */
+  cursor: pointer;
 }
 
 .edit-post-btn {
