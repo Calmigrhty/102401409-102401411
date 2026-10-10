@@ -12,15 +12,8 @@ function getTimeAgo(timeStr) {
 
 function renderDiscoverPosts(category = "all", searchQuery = "") {
   const postList = document.getElementById("discover-post-list");
-  const posts = getPosts(); // 从 storage 获取
-
-  // 筛选逻辑：类别筛选 + 搜索词筛选
-  const filteredPosts = posts.filter(post => {
-    const isActive = post.status === "active";
-    const matchCategory = category === "all" || post.category === category;
-    const matchSearch = searchQuery === "" || post.title.includes(searchQuery) || post.description.includes(searchQuery);
-    return isActive && matchCategory && matchSearch;
-  });
+  const posts = getPosts();
+  const filteredPosts = filterPosts(posts, category, searchQuery);
 
   postList.innerHTML = "";
 

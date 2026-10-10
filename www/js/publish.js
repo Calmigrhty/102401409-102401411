@@ -80,13 +80,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const typeInput = document.querySelector('.type-btn.active').dataset.type;
     const contactInput = document.getElementById("contact-input").value.trim();
 
-    if (!titleInput) {
-      alert("请填写物品名称");
-      return;
-    }
+    const validationResult = validatePostInput(
+      titleInput,
+      contactInput
+    );
 
-    if (!contactInput) {
-      alert("请填写联系方式");
+    if (!validationResult.valid) {
+      alert(validationResult.message);
       return;
     }
 
@@ -115,16 +115,12 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // 调用 storage.js 获取所有历史数据
     const posts = getPosts();
-
-    // 算法逻辑：寻找相反类型（比如我发布丢失，系统就去查招领），且标题或类别命中的物品
-    const targetType = typeInput === "lost" ? "found" : "lost";
-    const similarPost = posts.find(post => 
-      post.status === "active" &&
-      post.type === targetType &&
-      post.category === categoryInput &&
-      (post.title.includes(titleInput) || titleInput.includes(post.title))
+    const similarPost = findSimilarPost(
+      posts,
+      typeInput,
+      categoryInput,
+      titleInput
     );
 
     if (similarPost) {

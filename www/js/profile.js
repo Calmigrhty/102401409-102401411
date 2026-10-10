@@ -37,9 +37,11 @@ function renderMyPosts() {
     // 2. 判断状态渲染不同按钮
     const isResolved = post.status === "resolved";
     const btnClass = isResolved ? "status-btn resolved" : "status-btn";
-    const btnText = post.type === "lost"
-      ? (isResolved ? "已找到" : "标记为已找到")
-      : (isResolved ? "已归还" : "标记为已归还");
+    const btnText = isResolved
+      ? getResolvedStatusText(post.type)
+      : (post.type === "lost"
+          ? "标记为已找到"
+          : "标记为已归还");
 
     card.innerHTML = `
       <div class="list-card-content">
